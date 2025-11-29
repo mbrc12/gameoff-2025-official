@@ -1,0 +1,175 @@
+local Generator = {}
+local Set = require("lib.ds.set")
+
+
+_G.LevelReprs = {
+    [1] = [[
+P#XXacX#X#
+###XX##X#b
+X##a#b#X##
+X##X####X#
+###X##X###
+#XXc####X#
+#X##X####G
+]],
+    [2] = [[
+G#X##P##X
+d##X####c
+####XX###
+cX####X#X
+d#####X##
+    ]],
+    [3] = [[
+P##XXacX#X##X#X##X#
+###XX##X#b#X##XX##X
+X##a#b#X##X##X#X##X
+X##X####X#X#XX#X##X
+###X##X###XX##X#X#X
+#XXc####X#X#X##XX#X
+#X##X####G#X##X#X#X
+X#X#XX##X#b#X##X#XX
+##X##X#X#X##a##X#X#
+]]}
+
+---@param repr string
+---@return Level
+function Generator:parse(repr)
+    local tint = Util.choice({Colors.SteamLords.additional_blue, Colors.SteamLords.eggplant_purple, Colors.SteamLords.deep_fern})
+
+    while repr:sub(1, 1):match("[%s]") do
+        repr = repr:sub(2)
+    end
+
+    local i = 1
+    while not repr:sub(i, i):match("[%s]") do
+        i = i + 1
+    end
+    local width = i - 1
+    repr = repr:gsub("[%s]", "")
+    local height = #repr / width
+    assert(height % 2 == 1, "Level height must be odd")
+
+    local teleports = {}
+    ---@type Level
+    local level = {
+        grid = {},
+        width = width,
+        height = height,
+        yoffset = (15 - height) / 2,
+    }
+
+    for y = 1, height do
+        for x = 1, width do
+            local idx = (y - 1) * width + x
+            local c = repr:sub(idx, idx)
+            local byte = string.byte(c)
+
+            ---@type MapCell
+            local data = {
+                decorationFn = nil,
+                revealed = false,
+                explored = false,
+
+                bomb = false,
+                item = nil,
+                countConcealed = false,
+                teleport = nil,
+                tint = tint,
+            }
+
+            if 97 <= byte and byte <= 122 then
+                teleports[c] = teleports[c] or {}
+                table.insert(teleports[c], { x, y })
+            elseif c == 'P' then
+                level.player = { x, y }
+            elseif c == 'G' then
+                level.goal = { x, y }
+            elseif c == 'X' then
+                data.bomb = true
+            elseif c == '#' then
+                if math.random() < 0.1 then
+                    data.item = Util.choice({ "blue", "red" })
+                end
+                if math.random() < 0.1 then
+                    data.countConcealed = true
+                end
+            else
+                error("Invalid character in level representation: " .. c)
+            end
+
+            level.grid[Util.cellToNum({ x, y })] = data
+        end
+    end
+
+    for _, cells in pairs(teleports) do
+        if #cells == 2 then
+            local cell1 = cells[1]
+            local cell2 = cells[2]
+            local data1 = level.grid[Util.cellToNum(cell1)]
+            local data2 = level.grid[Util.cellToNum(cell2)]
+            data1.teleport = cell2
+            data2.teleport = cell1
+            -- Log(data1, data2)
+        end
+    end
+
+    return level
+end
+
+---@return Level
+function Generator:level()
+    ---@type GenGrid
+    local grid = {}
+
+    local width = 5
+    local height = 5
+
+    for y = 1, height do
+        for x = 1, width do
+            local u = math.random()
+            ---@type MapCell
+            local data = {
+                bomb = (u < 0.15),
+                revealed = false,
+                item = (u > 0.9) and Util.choice({ "blue", "red" }) or nil,
+                explored = false,
+                decorationFn = nil,
+                countConcealed = (u > 0.15) and (math.random() < 0.1),
+            }
+            grid[Util.cellToNum({ x, y })] = data
+        end
+    end
+
+    for i = 1, math.random(5) do
+        local cell1 = { 1, 1 }
+        local cell2 = { 1, 1 }
+        while Util.cellEq(cell1, cell2) do
+            cell1 = { math.random(1, width), math.random(1, height) }
+            cell2 = { math.random(1, width), math.random(1, height) }
+        end
+    end
+
+    ---@type Level
+    local level = {
+        grid = grid,
+        width = width,
+        height = height,
+    }
+
+    for y = 1, height do
+        for x = 1, width do
+            local count = adjacentBombs(level, { x, y })
+            if count == 0 then
+                if not level.player then
+                    level.player = { x, y }
+                else
+                    level.goal = { x, y }
+                end
+            end
+        end
+    end
+
+    return level
+end
+
+return Generator

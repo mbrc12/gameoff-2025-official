@@ -1,0 +1,65 @@
+local FADE_IN_DURATION = 0.5
+
+local Dialog = {
+    event = nil,
+    index = 0,
+    interactable = false,
+}
+
+--- NOTE: Dialog requires draw to be in sync with update. Change this later to not require this, which will need a change in the Text module.
+
+local DEFAULT_Y = VIEW_HEIGHT / 3
+local LINE_SPACING = 10
+
+---@param texts string[]
+---@param onComplete? fun()
+function Dialog:spawn(texts, onComplete)
+    self.event = {
+        texts = texts,
+        onComplete = onComplete or function() end,
+    }
+    self.index = 1
+    self.interactable = false
+    self.time = 0
+end
+
+---@return boolean
+function Dialog:isActive()
+    return self.event ~= nil
+end
+
+function Dialog:update(dt)
+    if not self.event then
+        return
+    end
+
+    local currentY = DEFAULT_Y
+    self.time = self.time + dt
+
+    for i = 1, self.index do
+        local text = self.event.texts[i]
+        local opacity = 1
+        if i == self.index then
+            opacity = math.min(1, self.time / FADE_IN_DURATION)
+            if opacity >= 1 then
+                self.interactable = true
+            else
+                self.interactable = false
+            end
+        end
+        Text:print(text, 0, currentY, true, { 1, 1, 1, opacity })
+        currentY = currentY + FONT_SIZE + LINE_SPACING
+    end
+
+    if self.interactable and Input:isJustPressed("INTERACT") then
+        self.index = self.index + 1
+        self.time = 0
+    end
+
+    if self.index > #self.event.texts then
+        self.event.onComplete()
+        self.event = nil
+    end
+end
+
+_G.Dialog = Dialog

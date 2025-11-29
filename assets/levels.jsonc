@@ -1,0 +1,701 @@
+// P is for Player Start
+// G is for Goal
+// X is bomb
+// # is wall
+// you can use letters for teleport, keys, doors etc.
+// for each letter, you define what it is in the object
+// items are randomly placed, with probability given by _resources
+{
+    "_levels": [
+        "b-1",
+        "b-2",
+        "b-3",
+        "b-4",
+        "b-5",
+        "b-6",
+        "b-7",
+        "b-8",
+        "b-9",
+        "b-10",
+        "b-11",
+        "b-12",
+        "finale",
+    ], // list of level names in order
+    "finale": {
+        "_name": "Finale",
+        "_tint": "mahogany",
+        "_tools": [
+            "defuser",
+        ],
+        "_seacreep": true,
+        "_resources": {
+            "chances": 0.5,
+            "initial": 5,
+        },
+        "_tutorials": {
+            "P": {
+                "id": "finale-intro",
+                "cells": [],
+                "text": [
+                    "The trials are complete. The prophecy has been fulfilled, and victory is yours.",
+                ]
+            },
+        },
+        "_data": [
+            "################################",
+            "###P.................x.....XG###",
+            "################################",
+        ],
+    },
+    "b-12": {
+        "_name": "Level XII",
+        "_tint": "additional_blue",
+        "_tools": [
+            "rat",
+            "water",
+            "defuser"
+        ],
+        "_tutorials": {
+            "P": {
+                "id": "finale",
+                "cells": [],
+                "text": [
+                    "You have reached the final level.",
+                    "Use all the tools at your disposal to escape this maze."
+                ]
+            }
+        },
+        "_resources": {
+            "chances": 0.4,
+            "initial": 5,
+        },
+        "_data": [
+            "##############",
+            "a##r.#XX...X.b",
+            "k.g..#XX.X.X.X",
+            ".X#.X#...X...u",
+            "XX#XXXP########",
+            "#######G#X...u",
+            "##....s.#X.XX#",
+            "##d#X.#X#..X##",
+            "b.hX....#....a",
+            "##############",
+        ],
+        "p": {
+            "teleport": true
+        },
+        "u": {
+            "teleport": true
+        },
+        "r": {
+            "key": "goal"
+        },
+        "s": {
+            "door": "goal"
+        },
+        "h": {
+            "key": "serenity"
+        },
+        "g": {
+            "door": "serenity"
+        },
+        "k": {
+            "key": "diagonal"
+        },
+        "d": {
+            "door": "diagonal"
+        },
+        "b": {
+            "teleport": true
+        },
+        "a": {
+            "teleport": true
+        }
+    },
+    "b-11": {
+        "_name": "Level XI",
+        "_tint": "mahogany",
+        "_tools": [
+            "rat",
+            "water",
+            "defuser"
+        ],
+        "_resources": {
+            "chances": 0.4,
+            "initial": 5,
+        },
+        "_data": [
+            "#XX#X.......a..",
+            ".XX##...X.#XXX.",
+            "..XX..XcXX.....",
+            "e....X..XX#X...",
+            ".XX...X..XXX##d",
+            "XXXXX#.#.XX#X.G",
+            "#X.....#eXX....",
+            "....#.#...fX#.#",
+            "P##.#...X######",
+            "..#...#########"
+        ],
+        "f": {
+            "key": "shadow"
+        },
+        "c": {
+            "door": "shadow"
+        },
+        "d": {
+            "door": "archival"
+        },
+        "e": {
+            "teleport": true
+        },
+        "a": {
+            "key": "archival"
+        },
+    },
+    "b-10": {
+        "_seed": 2,
+        "_name": "Level X",
+        "_tint": "forest_green",
+        "_tools": [
+            "rat",
+            "water",
+            "defuser"
+        ],
+        "_resources": {
+            "chances": 0.4,
+            "initial": 7,
+        },
+        "_tutorials": {
+            "P": {
+                "id": "big-level",
+                "cells": [],
+                "text": [
+                    "Some levels are really big and sprawling. Like this one."
+                ]
+            }
+        },
+        "_data": [
+            "..a#.....#G",
+            ".X..b#.#XX.",
+            "#.##..c..#d",
+            "#..X.X..e#.",
+            "f.X#XXXgX#a",
+            "...X.X....#",
+            ".#...X#.X..",
+            "XhX#XX.....",
+            "#....#...##",
+            ".i#j...X...",
+            ".X#....X.Xi",
+            ".#.f.X.###.",
+            "P#X#..##.c#",
+            "...#.#.#..#",
+            ".##.....###"
+        ],
+        "j": {
+            "key": "shadow"
+        },
+        "c": {
+            "teleport": true
+        },
+        "i": {
+            "teleport": true
+        },
+        "a": {
+            "teleport": true
+        },
+        "e": {
+            "key": "long past"
+        },
+        "f": {
+            "teleport": true
+        },
+        "h": {
+            "key": "future"
+        },
+        "b": {
+            "door": "long past"
+        },
+        "d": {
+            "door": "shadow"
+        },
+        "g": {
+            "door": "future"
+        },
+    },
+    "b-9": {
+        "_name": "Level IX",
+        "_tint": "slate_violet",
+        "_seacreep": true,
+        "_tools": [
+            "rat",
+            "water",
+            "defuser",
+        ],
+        "_resources": {
+            "chances": 0.4,
+            "initial": 4,
+        },
+        "_tutorials": {
+            "P": {
+                "id": "again",
+                "cells": [],
+                "text": [
+                    "Once again, the sea appears to be rising. Try to exit quickly."
+                ]
+            }
+        },
+        "a": {
+            "door": "flame"
+        },
+        "c": {
+            "key": "flame"
+        },
+        "_data": [
+            "#...a..b",
+            "#cXXb...",
+            "#...#.X.",
+            "#...XX..",
+            "#..X...G",
+            "#..X.#..",
+            "#P.X#..#"
+        ],
+        "b": {
+            "teleport": true
+        }
+    },
+    "b-8": {
+        "_name": "Level VIII",
+        "_tint": "aubergine",
+        "_tools": [
+            "defuser",
+            "rat",
+            "water",
+        ],
+        "_resources": {
+            "chances": 0.3,
+            "initial": 6,
+        },
+        "_tutorials": {
+            "P": {
+                "id": "defuser",
+                "cells": [],
+                "text": [
+                    "In celebration of you clearing the hard level, you have been granted the final tool: the bomb defuser.",
+                    "You can defuse a bomb in an adjacent cell (press SPACE, and then choose a direction). The bomb may be exposed or hidden.",
+                    "This tools is rather expensive, but it can open up new paths. Use it wisely."
+                ]
+            },
+            "c": {
+                "id": "forcedbomb",
+                "cells": [
+                    [
+                        1,
+                        0
+                    ]
+                ],
+                "text": [
+                    "This cell definitely contains a bomb. You can use the defuser to safely remove it."
+                ]
+            }
+        },
+        "_data": [
+            "################",
+            "#P..cX........G#",
+            "################",
+        ],
+    },
+    "b-7": {
+        "_name": "Level VII",
+        "_tint": "eggplant_purple",
+        "_tools": [
+            "rat",
+            "water"
+        ],
+        "_resources": {
+            "chances": 0.3,
+            "initial": 5,
+        },
+        "_tutorials": {
+            "P": {
+                "id": "p-2",
+                "cells": [],
+                "text": [
+                    "It is time for a harder level. Do not waste your resources."
+                ]
+            }
+        },
+        "d": {
+            "door": "spiral"
+        },
+        "c": {
+            "key": "dream"
+        },
+        "_data": [
+            "##.##.a....",
+            "#..X..#XX..",
+            "##...X##b.#",
+            "#..XXXXX.##",
+            "##..c##..#G",
+            "...#..XX.d.",
+            "P.XX#.XX#..",
+            "##XeX..f.#.",
+            "##......##."
+        ],
+        "f": {
+            "key": "spiral"
+        },
+        "b": {
+            "door": "disdain"
+        },
+        "a": {
+            "door": "dream"
+        },
+        "e": {
+            "key": "disdain"
+        }
+    },
+    "b-6": {
+        "_name": "Level VI",
+        "_tint": "forest_green",
+        "_seed": 1,
+        "_tools": [
+            "rat",
+            "water"
+        ],
+        "_resources": {
+            "chances": 0.2,
+            "initial": 3,
+        },
+        "_data": [
+            "#.#X#......",
+            "P.###XX..#G",
+            "...X..#.#X.",
+            ".#.aX.X....",
+            "#XX...X.#..",
+            "##X#...X...",
+            "#XX....X...",
+            "#XX#.#XX..#",
+            "####..b...."
+        ],
+        "b": {
+            "door": "future"
+        },
+        "a": {
+            "key": "future"
+        }
+    },
+    "b-5": {
+        "_name": "Level V",
+        "_seed": 5,
+        "_tools": [
+            "water",
+            "rat"
+        ],
+        "_tint": "slate_violet",
+        "_seacreep": false,
+        "_resources": {
+            "chances": 0.3,
+            "initial": 3,
+        },
+        "_tutorials": {
+            "P": {
+                "id": "water",
+                "cells": [],
+                "text": [
+                    "From the rising tides, you acquired a new tool, the water waves.",
+                    "You can send out waves of water to reveal a straight row of cells. Note that these consume two resources each time.",
+                ]
+            },
+            "s": {
+                "id": "switch",
+                "cells": [],
+                "text": [
+                    "You can switch between your tools by pressing TAB. The current tool, usages and costs are displayed at the top right."
+                ]
+            },
+        },
+        "_data": [
+            "##############",
+            "#P....s.XX.#k#",
+            "#XXXXXX..XX.d#",
+            "#cXgX.....XXc#",
+            "#...X##X.#####",
+            "#rXXX#r...e.G#",
+            "##############",
+        ],
+        "d": {
+            "door": "access"
+        },
+        "e": {
+            "door": "water",
+        },
+        "g": {
+            "key": "access",
+        },
+        "k": {
+            "key": "water",
+        },
+        "c": {
+            "teleport": true,
+        },
+        "r": {
+            "teleport": true,
+        },
+    },
+    "b-4": {
+        "_name": "Level IV",
+        "_seed": 10,
+        "_tools": [
+            "rat"
+        ],
+        "_tint": "aubergine",
+        "_seacreep": true,
+        "_resources": {
+            "chances": 0.2,
+            "initial": 6,
+        },
+        "_tutorials": {
+            "P": {
+                "id": "seacreep",
+                "cells": [],
+                "text": [
+                    "The rising sea is sometimes not so forgiving. The waves will gradually eat away the land.",
+                    "Please escape before you are consumed."
+                ]
+            }
+        },
+        "_data": [
+            "##X..c#",
+            "#..XX.#",
+            "#P.c#k#",
+            "#XX.#X#",
+            "###d..G",
+        ],
+        "c": {
+            "teleport": true,
+        },
+        "k": {
+            "key": "waves",
+        },
+        "d": {
+            "door": "waves"
+        }
+    },
+    "b-3": {
+        "_name": "Level III",
+        "_seed": 20,
+        "_tools": [
+            "rat"
+        ],
+        "_tint": "additional_blue",
+        "_resources": {
+            "chances": 0.2,
+            "initial": 6,
+        },
+        "_tutorials": {
+            "P": {
+                "id": "hide-ui",
+                "cells": [],
+                "text": [
+                    "You can toggle the user interface by pressing H."
+                ]
+            },
+            // "q": {
+            //     "id": "rat-2",
+            //     "cells": [],
+            //     "text": [
+            //         "You should try using the rat from the top row."
+            //     ]
+            // }
+        },
+        "_data": [
+            "##############",
+            "#XX.r######.r#",
+            "#X...#....#.X#",
+            "#X.X.#.##.#.X#",
+            "#k..X#.GXd#..#",
+            "####X###..#X.#",
+            "#.g.X#...XcX.#",
+            "#XX.Pe.X...Xc#",
+            "##############",
+        ],
+        "c": {
+            "teleport": true,
+        },
+        "r": {
+            "teleport": true,
+        },
+        "k": {
+            "key": "spiral",
+        },
+        "d": {
+            "door": "spiral"
+        },
+        "g": {
+            "key": "exit",
+        },
+        "e": {
+            "door": "exit"
+        },
+    },
+    "b-2": {
+        "_name": "Level II",
+        "_seed": 1,
+        "_tools": [
+            "rat"
+        ],
+        "_seacreep": false,
+        "_tint": "forest_green",
+        "_resources": {
+            "chances": 0.1,
+            "initial": 5,
+        },
+        "_keytints": {
+            "helper rats": "muted_olive"
+        },
+        "_tutorials": {
+            "P": {
+                "id": "rat",
+                "cells": [],
+                "text": [
+                    "Starting this level, you will have access to the first tool, the helper rat. Rats will help you find bombs.",
+                    "As long as you have enough resources, you can use it by pressing the interact (SPACE) button. Your resources are displayed at the top right.",
+                    "Rats will respond to your call, but you cannot control them. But maybe you can guess their behavior?"
+                ]
+            },
+            "d": {
+                "id": "doors",
+                "cells": [],
+                "text": [
+                    "Note that rats (and other tools) use up resources, but you can collect more by exploring the map."
+                ]
+            },
+        },
+        "_data": [
+            "##########",
+            "#..X..d..#",
+            "#k.XP.#.G#",
+            "#.....#..#",
+            "#X########",
+        ],
+        "k": {
+            "key": "helper rats",
+        },
+        "d": {
+            "door": "helper rats"
+        },
+    },
+    "b-1": {
+        "_name": "Level I",
+        "_seed": 1,
+        "_tools": [],
+        "_seacreep": false,
+        "_tint": "eggplant_purple",
+        "_resources": {
+            "chances": 0.1,
+            "initial": 3,
+        },
+        "_keytints": {
+            "initiation": "steel_blue"
+        },
+        "_tutorials": {
+            "P": {
+                "id": "walls",
+                "cells": [
+                    [
+                        -1,
+                        -1
+                    ],
+                    [
+                        1,
+                        1
+                    ]
+                ],
+                "text": [
+                    "The highlighted cells are walls. You cannot pass through them, but they do not contain bombs.",
+                ]
+            },
+            "t": {
+                "id": "bombs",
+                "cells": [
+                    [
+                        -1,
+                        -1
+                    ],
+                    [
+                        -1,
+                        0
+                    ],
+                    [
+                        -1,
+                        1
+                    ],
+                    [
+                        0,
+                        -1
+                    ],
+                    [
+                        0,
+                        1
+                    ],
+                    [
+                        1,
+                        1
+                    ],
+                    [
+                        1,
+                        0
+                    ],
+                    [
+                        1,
+                        -1
+                    ]
+                ],
+                "text": [
+                    "Cells without bombs reveal the number of bombs around them, in the highlighted cells.",
+                    "It would be wise to avoid stepping on bombs, but I cannot stop you from trying."
+                ]
+            },
+            "g": {
+                "id": "guess2",
+                "cells": [
+                    [
+                        1,
+                        0
+                    ]
+                ],
+                "text": [
+                    "Does this cell contain a bomb?",
+                ]
+            },
+            "a": {
+                "id": "teleporters",
+                "cells": [
+                    [
+                        0,
+                        0
+                    ]
+                ],
+                "text": [
+                    "Teleport (press T) to move to the paired teleporter."
+                ]
+            },
+        },
+        "_data": [
+            "##########",
+            "#P.#a.#.G#",
+            "#.##..d..#",
+            "#tgaXk#..#",
+            "#X########",
+        ],
+        "a": {
+            "teleport": true,
+        },
+        "k": {
+            "key": "initiation",
+        },
+        "d": {
+            "door": "initiation"
+        },
+    },
+}
