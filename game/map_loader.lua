@@ -63,7 +63,7 @@ return function(level)
             -- Camera:moveTo(map.cellCenter(Util.cellOffset({1, (level.height + 1)/2}, map.offset)))
             setCameraLimits(topLeft, bottomRight)
             Camera:moveTo(map.cellCenter(Util.cellOffset(level.player, map.offset)))
-            Log("Camera limits:", Camera.limits)
+            -- Log("Camera limits:", Camera.limits)
             -- Log("moved to ", map.cellCenter(Util.cellOffset(level.player, map.offset)))
             map.first_load = false
         end

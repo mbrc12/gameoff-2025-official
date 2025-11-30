@@ -103,7 +103,7 @@ return function()
     local function draw(self)
         Draw:draw("main", ZINDEX.map.water, function()
             ---@type Assets.Sprites
-            local sprite = allowed[current] and "ui/defuse_select" or "ui/defuse_select_cross"
+            local sprite = allowed[current] and "ui/select_arrow" or "ui/defuse_select_cross"
             local rotation = rot[current]
             Draw:sprite(sprite, pos.x, pos.y, rotation)
         end)

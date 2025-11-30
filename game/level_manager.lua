@@ -18,7 +18,6 @@ LevelManager.__index = LevelManager
 
 ---@param lvl? number
 function LevelManager.new(lvl)
-    Parser:init()
     o = {
         list = Parser:list(),
         curlvl = lvl or 1,

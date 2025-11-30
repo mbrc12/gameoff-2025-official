@@ -282,7 +282,7 @@
                 "text": [
                     "In celebration of you clearing the hard level, you have been granted the final tool: the bomb defuser.",
                     "You can defuse a bomb in an adjacent cell (press SPACE, and then choose a direction). The bomb may be exposed or hidden.",
-                    "This tools is rather expensive, but it can open up new paths. Use it wisely."
+                    "This tool is rather expensive, but it can open up new paths. Use it wisely."
                 ]
             },
             "c": {
@@ -416,8 +416,8 @@
         },
         "_data": [
             "##############",
-            "#P....s.XX.#k#",
-            "#XXXXXX..XX.d#",
+            "#P....ssXX.#k#",
+            "#XXXXXXssXX.d#",
             "#cXgX.....XXc#",
             "#...X##X.#####",
             "#rXXX#r...e.G#",
@@ -559,15 +559,14 @@
                 "cells": [],
                 "text": [
                     "Starting this level, you will have access to the first tool, the helper rat. Rats will help you find bombs.",
-                    "As long as you have enough resources, you can use it by pressing the interact (SPACE) button. Your resources are displayed at the top right.",
-                    "Rats will respond to your call, but you cannot control them. But maybe you can guess their behavior?"
+                    "You can use it by pressing the interact (SPACE) button, and choosing a starting direction (UP or DOWN).",
                 ]
             },
             "d": {
                 "id": "doors",
                 "cells": [],
                 "text": [
-                    "Note that rats (and other tools) use up resources, but you can collect more by exploring the map."
+                    "Note that rats (and other tools) use up resources, displayed at the top right. You can collect more by exploring the map."
                 ]
             },
         },

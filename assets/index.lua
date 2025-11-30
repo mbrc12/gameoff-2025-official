@@ -58,7 +58,7 @@ Assets.sprites = {
     ["ui/rat"] = scaled({ asset = "ss", tx = 6, ty = 2 }),
     ["ui/water"] = scaled({ asset = "ss", tx = 6, ty = 3 }),
     ["ui/defuser"] = scaled({ asset = "ss", tx = 6, ty = 4 }),
-    ["ui/defuse_select"] = scaled({ asset = "ss", tx = 7, ty = 4 }),
+    ["ui/select_arrow"] = scaled({ asset = "ss", tx = 7, ty = 4 }),
     ["ui/defuse_select_cross"] = scaled({ asset = "ss", tx = 7, ty = 5 }),
 
     ["uilist/marker"] = scaled({ asset = "ss", tx = 8, ty = 0 }),
@@ -95,6 +95,7 @@ Assets.sfxs = {
     -- thud = { name = "thud.mp3" }, -- from https://pixabay.com/sound-effects/thud-291047/
 
     -- confirm = { name = "Confirm_3.ogg" },
+    thud = { name = "thud.wav" },
     damage = { name = "Explosion.wav" },
     defuse = { name = "Radar_Use.wav" },
     drowning = { name = "drowning.ogg" },
@@ -104,6 +105,7 @@ Assets.sfxs = {
     -- hit = { name = "hit.wav" },
     -- miss = { name = "miss.wav" },
     -- step = { name = "step.wav" },
+    rat = { name = "rat.mp3" },
     rat_spawn = { name = "Rat_Spawn.wav" },
     rat_move=  { name = "Rat_Move.wav" },
     pickup = { name = "pickup-2.wav" },

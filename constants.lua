@@ -7,8 +7,8 @@ CELL_SIZE = 16
 VIEW_WIDTH = 320
 VIEW_HEIGHT = 180
 
+LOCAL = false
 -- LOCAL = true
-LOCAL = true
 
 if LOCAL then
     FULLSCREEN = false

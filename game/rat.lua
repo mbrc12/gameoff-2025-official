@@ -1,4 +1,5 @@
 local RAT_TICK = 0.3
+local WAIT_TIME = 0.2
 
 return function()
     local map = Registry.map
@@ -6,7 +7,9 @@ return function()
     if map.resources < ToolCosts.rat then
         return nil
     end
-    map.resources = map.resources - ToolCosts.rat
+
+    local ratSprite = "rat_1"
+    local started = false
 
     local cell = { map.player[1], map.player[2] }
     local current = { cell[1], cell[2] }
@@ -14,38 +17,44 @@ return function()
     local visited = { [Util.cellToNum(current)] = true }
     local dir = { -1, 0 }
     local ratPos = map.cellCenter(current)
-    local ratSprite = "rat_1"
-    Sounds:sfx("rat_spawn")
-    local sfx = Sounds:sfx("rat_move", nil, true)
-    local moving = false
+    local firstMove = true
+    local moving = false -- is the rat currently moving between cells
+
+    local function forbidden(cell)
+        local cellData = map:get(cell)
+        return (not cellData) or
+                cellData.wall or
+                cellData.door or
+                cellData.bomb
+    end
 
     local stepUpdate = function()
-        if not map:exists(current) then
+        map:reveal(current)
+        if forbidden(current) then
             return true
         end
 
         if moving then
             return false
         end
-        map:reveal(current)
-        if map:isBomb(current) then
-            return true
-        end
+
         local options = {
             --right turn
             { -dir[2], dir[1] },
             --straight
             { dir[1], dir[2] },
         }
+
+        if firstMove then
+            table.remove(options, 1)
+            firstMove = false
+        end
+
         local success = false
         for i = 1, 2 do
             local newDir = options[i]
             local newCell = { current[1] + newDir[1], current[2] + newDir[2] }
-            local cellData = map:get(newCell)
-            local forbid = (not cellData) or
-                    cellData.wall or
-                    cellData.door
-            if not forbid and not visited[Util.cellToNum(newCell)] then
+            if not visited[Util.cellToNum(newCell)] then
                 dir = newDir
                 oldCell = { current[1], current[2] }
                 current = newCell
@@ -58,7 +67,16 @@ return function()
             return true
         end
 
-        map:get(current).item = nil
+        if not map:exists(current) then
+            return true
+        end
+
+        -- map:get(current).item = nil
+        local cellData = map:get(current)
+        if (not cellData) or cellData.wall or cellData.door then
+            Sounds:sfx("thud")
+            return true
+        end
 
         moving = true
         Tweens:new({
@@ -82,20 +100,72 @@ return function()
         end
     end)
 
+    -- choices are "up", "down"
+    local choice = "up"
+    local sfx
+
+    local function chooseUpdate()
+        if Input:isJustPressed("UP") then
+            choice = "up"
+            return false
+        elseif Input:isJustPressed("DOWN") then
+            choice = "down"
+            return false
+        elseif Input:isJustPressed("BACK") then
+            return true -- finish
+        elseif Input:isJustPressed("INTERACT") then
+            started = true
+            if choice == "up" then
+                dir = { 0, -1 }
+            else
+                dir = { 0, 1 }
+            end
+            map.resources = map.resources - ToolCosts.rat
+
+            Sounds:sfx("rat_spawn")
+            sfx = Sounds:sfx("rat_move", nil, true)
+
+            return false
+        end
+    end
+
+    local waiting = false
+    local elapsed = 0
 
     return {
         update = function(self, dt)
+            if waiting then
+                if elapsed >= WAIT_TIME then
+                    return true
+                else
+                    elapsed = elapsed + dt
+                    return
+                end
+            end
+            if not started then
+                return chooseUpdate()
+            end
             spriteToggle(dt)
-            return stepUpdate()
+            local stop = stepUpdate()
+            if stop then
+                waiting = true
+            end
         end,
         draw = function()
             Draw:draw("main", ZINDEX.map.water, function()
+                if not started then
+                    local rot = (choice == "up") and 0 or 180
+                    Draw:sprite("ui/select_arrow", ratPos.x, ratPos.y, rot)
+                    return
+                end
                 local rota = Util.degAtan2(dir[2], dir[1]) + 90
                 Draw:sprite(ratSprite, ratPos.x, ratPos.y, rota)
             end)
         end,
         onComplete = function()
-            Sounds:stop(sfx)
+            if sfx then
+                Sounds:stop(sfx)
+            end
         end
     }
 end

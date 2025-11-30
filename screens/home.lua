@@ -8,11 +8,15 @@ local HomeScreen = {
     uistack = {},
     ---@type love.ParticleSystem
     particleSystem = nil,
+    ---@type table<string, number>
+    levels = {},
+    selectingLevel = false
 }
 
 local ui = {
-    _opts = { "start", "replay intro", "options", "quit" },
+    _opts = { "start", "select level", "replay intro", "options" },
     start = { },
+    ["select level"] = { },
     ["replay intro"] = {},
     options = {
         _opts = { "sensitivity", "bgm volume" },
@@ -29,17 +33,28 @@ local ui = {
             high = 2,
         }
     },
-    quit = {},
 }
 
 function HomeScreen:enter()
     Music:playMenu()
+    
+    local parser = require("game.parser")
+    local list = parser:list()
+    for i, lvl in ipairs(list) do
+        local name = parser:get(lvl).name
+        assert(name, "Level has no name: " .. lvl)
+        ---@cast name string
+        self.levels[name] = i
+        table.insert(ui["select level"], name)
+    end
+    
+    self.selectingLevel = false
     self.particleSystem = Game.particleSystem()
     Camera:reset()
     sea = require("game.sea").new()
     sea:set(-100)
     self.uistack = {}
-    table.insert(self.uistack, UIList.new(ui._opts))
+    table.insert(self.uistack, UIList.new(ui._opts, true, false))
 end
 
 function HomeScreen:leave()
@@ -55,21 +70,29 @@ function HomeScreen:update(dt)
     end
     if opt == -1 and #self.uistack > 1 then
         table.remove(self.uistack)
+        selectingLevel = false
         return
     end
     local selection = current_ui.options[opt]
+    if self.selectingLevel then
+        local lvlnum = self.levels[selection]
+        _G.LevelToLoad = lvlnum
+        switchScreen(Fader.new(Game))
+    end
     if selection == "start" then
         -- print("starting game")
         switchScreen(Fader.new(Game))
+    end
+    if selection == "select level" then
+        self.selectingLevel = true
+        table.insert(self.uistack, UIList.new(ui["select level"], true, true)) -- compressed
+        return
     end
     if selection == "replay intro" then
         switchScreen(Fader.new(StoryScreen))
     end
     if selection == "options" then
         table.insert(self.uistack, UIList.new(ui.options._opts, true))
-    end
-    if selection == "quit" then
-        love.event.quit()
     end
     if selection == "sensitivity" then
         table.insert(self.uistack, UIList.new(ui.options.sensitivity._opts, true))

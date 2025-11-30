@@ -18,6 +18,7 @@ require("screens.restart_level")
 require("screens.home")
 require("screens.story")
 require("screens.click")
+require("game.parser"):init()
 
 local moonshine = require("deps.moonshine")
 local moonshine_effect

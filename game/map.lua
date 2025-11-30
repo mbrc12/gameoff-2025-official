@@ -375,6 +375,7 @@ function Map:draw()
             local pos = self.cellCenter(cell)
             local forbidNumber =
                 (not cellData.revealed) or
+                cellData.wall or
                 cellData.bomb or
                 cellData.teleport or
                 Util.cellEq(cell, self.goal) or
